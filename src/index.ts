@@ -3,7 +3,6 @@ import "dotenv";
 
 const PORT = process.env.PORT || "8000";
 const RETRY_TIME_SECONDS = Number(process.env.RETRY_TIME_SECONDS) || 1;
-const SILENT = Boolean(process.env.SILENT) || false;
 const app = express();
 app.use(express.json());
 
@@ -60,7 +59,6 @@ async function jobScheduler() {
  * Logging function yang bakal stop kalo di config
  */
 function log(...args: unknown[]) {
-  if (SILENT) return;
   console.log(...args);
 }
 
