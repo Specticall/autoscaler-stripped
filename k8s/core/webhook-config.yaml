@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: api-webhook-config
+  namespace: monitoring
+spec:
+  route:
+    receiver: "api-receiver"
+    groupBy: ["job", "alertname"]
+    groupWait: 30s
+    groupInterval: 1m
+    repeatInterval: 2m
+    routes:
+      - receiver: "api-receiver"
+        continue: true
+        matchers:
+          - name: alertname
+            matchType: "="
+            value: HighCPUUsage
+  receivers:
+    - name: "api-receiver"
+      webhookConfigs:
+        - url: "http://autoscaler-api-svc.monitoring.svc.cluster.local:8000/schedule/scale"

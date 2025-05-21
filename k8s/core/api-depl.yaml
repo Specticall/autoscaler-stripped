@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoscaler-api-depl
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: autoscaler-api
+  template:
+    metadata:
+      labels:
+        app: autoscaler-api
+    spec:
+      containers:
+        - name: autoscaler-api
+          image: josephyusmita/autoscaler-api
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: autoscaler-api-svc
+spec:
+  selector:
+    app: autoscaler-api
+  ports:
+    - port: 8000
+      targetPort: 8000

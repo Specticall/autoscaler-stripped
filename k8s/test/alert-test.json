@@ -1,0 +1,13 @@
+[
+  {
+    "labels": {
+      "alertname": "HighCPUUsage",
+      "severity": "warning"
+    },
+    "annotations": {
+      "summary": "This is a synthetic test",
+      "description": "Testing webhook delivery"
+    },
+    "startsAt": "2025-05-16T00:00:00Z"
+  }
+]

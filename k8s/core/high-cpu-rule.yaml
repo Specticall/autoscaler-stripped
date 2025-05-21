@@ -1,0 +1,14 @@
+additionalPrometheusRulesMap:
+  rule-name:
+    groups:
+      - name: Scale
+        rules:
+          - alert: HighCPUUsage
+            expr: sum(rate(container_cpu_usage_seconds_total{job="kubelet", image!="", container!="POD"}[5m]))/sum(machine_cpu_cores) > 0.4
+            for: 1m
+            labels:
+              severity: warning
+              namespace: monitoring
+            annotations:
+              summary: Host running out of cpu
+              description: "Node cpu is filling up (< 40% left)"
